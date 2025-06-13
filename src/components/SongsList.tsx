@@ -4,12 +4,14 @@ import SongCard from "./SongsCard";
 import SongModal from "./SongModal";
 import { useState } from "react";
 import type { Song } from "../hooks/useSongs";
+import SongsCardSkeleton from "./SongsCardSkeleton";
 
 const SongsList = () => {
-  const { songs, createSong, editSong, deleteSong } = useSongs();
+  const { songs, createSong, editSong, deleteSong, isLoading } = useSongs();
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedSong, setSelectedSong] = useState<Song | undefined>(undefined);
-
+  const skeletons = [1, 2, 3, 4, 5, 6];
+  
   const openAddModal = () => {
     setSelectedSong(undefined);
     setModalOpen(true);
@@ -34,6 +36,7 @@ const SongsList = () => {
       <Button colorScheme="teal" mb={6} onClick={openAddModal}>+ Add New Song</Button>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+        {isLoading && skeletons.map(s => (<SongsCardSkeleton key={s}/>))}
         {songs.map((song) => (
           <SongCard
             key={song._id}
