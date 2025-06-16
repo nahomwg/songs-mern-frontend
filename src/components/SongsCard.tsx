@@ -1,5 +1,5 @@
 import { Button, Card, CardHeader, CardBody, CardFooter, Heading, Text } from '@chakra-ui/react';
-import type { Song } from '../hooks/useSongs';
+import type { Song } from '../app/features/songs/songsSlice';
 
 interface Props {
   song: Song;

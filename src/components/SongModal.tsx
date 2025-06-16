@@ -3,7 +3,7 @@ import {
   ModalCloseButton, ModalFooter, Button, Input, Stack
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import type { Song } from '../hooks/useSongs';
+import type { Song } from '../app/features/songs/songsSlice';
 
 interface Props {
   isOpen: boolean;
