@@ -1,5 +1,5 @@
-# 🎵 Music Hub — React Frontend
-
+# 🎵 Songs Hub — React Frontend
+visit https://songshub.vercel.app/
 A modern music management frontend built with **React + TypeScript + Redux Toolkit + Redux Saga + Chakra UI**.
 
 ---
@@ -27,7 +27,7 @@ A modern music management frontend built with **React + TypeScript + Redux Toolk
 ## 🔧 Setup & Run Locally
 
 ```bash
-git clone https://github.com/yourusername/music-hub-frontend.git
+git clone https://github.com/nahomwg/songs-mern-frontend.git
 cd music-hub-frontend
 npm install
 npm run dev
