@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Song } from "../app/features/songs/songsSlice";
 import type { Stats } from "../app/features/stats/statsSlice";
 
-const BASE_URL = "https://express-api-mdt8.onrender.com/api";
+const BASE_URL = import.meta.env.VITE_API_URL + "/api";
 
 export const getAllSongsAPI = async (): Promise<Song[]> => {
   const res = await axios.get(`${BASE_URL}/songs`);

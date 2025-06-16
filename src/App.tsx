@@ -1,6 +1,6 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react';
-import SongsList from './components/SongsList';
-import StatsPage from './components/StatsPage';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
+import SongsList from "./components/SongsList";
+import StatsPage from "./components/StatsPage";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
             <SongsList />
           </TabPanel>
           <TabPanel>
-            <StatsPage /> {/* New Component */}
+            <StatsPage />
           </TabPanel>
         </TabPanels>
       </Tabs>
