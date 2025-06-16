@@ -1,12 +1,11 @@
-import { Input, Box, Button, SimpleGrid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../app/store";
 import { fetchSongs, type Song } from "../app/features/songs/songsSlice";
-import SongCard from "./SongsCard";
+import { Box, Button, Input, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import SongsCard from "./SongsCard";
 import SongModal from "./SongModal";
 import SongsCardSkeleton from "./SongsCardSkeleton";
-//import { Song } from "../features/songs/songsSlice";
 
 const SongsList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,7 +13,7 @@ const SongsList = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedSong, setSelectedSong] = useState<Song | undefined>(undefined);
-  const [filter, setFilter] = useState(""); // state for filter
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     dispatch(fetchSongs());
@@ -44,7 +43,8 @@ const SongsList = () => {
 
   const skeletons = [1, 2, 3, 4, 5, 6];
 
-  // filter logic (search by title, artist, album, genre)
+  const bgColor = useColorModeValue('gray.50', 'gray.700');
+
   const filteredSongs = songs.filter(song =>
     song.title.toLowerCase().includes(filter.toLowerCase()) ||
     song.artist.toLowerCase().includes(filter.toLowerCase()) ||
@@ -53,22 +53,24 @@ const SongsList = () => {
   );
 
   return (
-    <Box p={8}>
-      <Button colorScheme="teal" mb={6} onClick={openAddModal}>+ Add Song</Button>
+    <Box p={8} bg={bgColor} borderRadius="lg" boxShadow="lg">
+      <Button colorScheme="teal" mb={4} onClick={openAddModal}>
+        + Add Song
+      </Button>
 
-      {/* Filter Input */}
       <Input
         placeholder="Filter by title, artist, album, genre..."
         mb={6}
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
+        bg={useColorModeValue('white', 'gray.600')}
       />
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
         {loading
           ? skeletons.map((skeleton) => <SongsCardSkeleton key={skeleton} />)
           : filteredSongs.map((song) => (
-              <SongCard
+              <SongsCard
                 key={song._id}
                 song={song}
                 onEdit={() => openEditModal(song)}
