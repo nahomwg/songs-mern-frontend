@@ -1,7 +1,7 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export interface Song {
-  id: string;
+  _id: string;
   title: string;
   artist: string;
   album: string;
@@ -20,10 +20,9 @@ const initialState: SongsState = {
 };
 
 const songsSlice = createSlice({
-  name: 'songs',
+  name: "songs",
   initialState,
   reducers: {
-    // Saga triggers this
     fetchSongs: (state) => {
       state.loading = true;
     },
@@ -35,24 +34,25 @@ const songsSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-
-    // Local actions (optional for adding/removing manually)
     addSong: (state, action: PayloadAction<Song>) => {
       state.songs.push(action.payload);
     },
-    removeSong: (state, action: PayloadAction<string>) => {
-      state.songs = state.songs.filter(song => song.id !== action.payload);
+    updateSong: (state, action: PayloadAction<Song>) => {
+      const index = state.songs.findIndex((s) => s._id === action.payload._id);
+      if (index !== -1) state.songs[index] = action.payload;
+    },
+    deleteSong: (state, action: PayloadAction<string>) => {
+      state.songs = state.songs.filter((song) => song._id !== action.payload);
     },
   },
 });
 
-// ✅ Correctly export ALL actions
-export const { 
-  fetchSongs, 
-  fetchSongsSuccess, 
-  fetchSongsFailure, 
-  addSong, 
-  removeSong 
+export const {
+  fetchSongs,
+  fetchSongsSuccess,
+  fetchSongsFailure,
+  addSong,
+  updateSong,
+  deleteSong,
 } = songsSlice.actions;
-
 export default songsSlice.reducer;

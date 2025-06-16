@@ -1,25 +1,31 @@
-import apiClient from './api-client';
-import type { Song } from '../hooks/useSongs';
+import axios from "axios";
+import type { Song } from "../app/features/songs/songsSlice";
+import type { Stats } from "../app/features/stats/statsSlice";
 
-export const getAllSongs = async () => {
-  const res = await apiClient.get<Song[]>('/songs');
+const BASE_URL = "https://express-api-mdt8.onrender.com/api";
+
+export const getAllSongsAPI = async (): Promise<Song[]> => {
+  const res = await axios.get(`${BASE_URL}/songs`);
   return res.data;
 };
 
-export const addSong = async (song: Omit<Song, '_id'>) => {
-  const res = await apiClient.post<Song>('/songs', song);
+export const addSongAPI = async (song: Omit<Song, "_id">): Promise<Song> => {
+  const res = await axios.post(`${BASE_URL}/songs`, song);
   return res.data;
 };
 
-export const updateSong = async (id: string, song: Omit<Song, '_id'>) => {
-  const res = await apiClient.put<Song>(`/songs/${id}`, { id, ...song });
+export const updateSongAPI = async (
+  id: string,
+  data: Omit<Song, "_id">
+): Promise<Song> => {
+  const res = await axios.put(`${BASE_URL}/songs/${id}`, { id, ...data });
   return res.data;
 };
 
-export const deleteSong = async (id: string) => {
-  await apiClient.delete(`/songs/${id}`);
+export const deleteSongAPI = async (id: string) => {
+  await axios.delete(`${BASE_URL}/songs/${id}`);
 };
-export const getStatsOverview = async () => {
-  const res = await apiClient.get('/stats/overview');
+export const getStatsOverview = async (): Promise<Stats> => {
+  const res = await axios.get(`${BASE_URL}/stats/overview`);
   return res.data;
 };

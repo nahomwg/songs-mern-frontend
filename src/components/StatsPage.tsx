@@ -1,10 +1,18 @@
-import { Box, SimpleGrid, Stat, StatLabel, StatNumber, Heading, Spinner, Alert } from "@chakra-ui/react";
-import useStats from "../hooks/useStat";
+import { Box, Heading, SimpleGrid, Stat, StatLabel, StatNumber, Spinner, Alert } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../app/store";
+import { fetchStats } from "../app/features/stats/statsSlice";
 
 const StatsPage = () => {
-  const { stats, error, isLoading } = useStats();
+  const dispatch = useDispatch<AppDispatch>();
+  const { stats, loading, error } = useSelector((state: RootState) => state.stats);
 
-  if (isLoading) return <Spinner size="xl" />;
+  useEffect(() => {
+    dispatch(fetchStats());
+  }, [dispatch]);
+
+  if (loading) return <Spinner size="xl" />;
   if (error) return <Alert status="error">{error}</Alert>;
 
   return (
@@ -22,12 +30,7 @@ const StatsPage = () => {
   );
 };
 
-interface StatCardProps {
-  label: string;
-  value: number;
-}
-
-const StatCard = ({ label, value }: StatCardProps) => (
+const StatCard = ({ label, value }: { label: string; value: number }) => (
   <Stat
     p={4}
     border="1px solid"
